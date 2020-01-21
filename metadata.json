@@ -2,9 +2,11 @@
   "name": "ssm-nifi_registry",
   "version": "0.1.0",
   "author": "Stig Sandbeck Mathisen",
-  "summary": "",
+  "summary": "Manage Apache NiFi Registry",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/ssm/ssm-nifi_registry.git",
+  "project_page": "https://github.com/ssm/ssm-nifi_registry",
+  "issues_url": "https://github.com/ssm/ssm-nifi_registry/issues",
   "dependencies": [
 
   ],
