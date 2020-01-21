@@ -1,0 +1,22 @@
+<%- |
+    String $user,
+    Stdlib::Absolutepath $install_dir,
+    | -%>
+[Unit]
+Description=Apache NiFi Registry
+
+[Service]
+Type=simple
+ExecStart=<%= $install_dir %>/bin/nifi-registry.sh run
+GuessMainPID=yes
+User=<%= $user %>
+
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectHome=tmpfs
+ProtectSystem=yes
+
+[Install]
+WantedBy=multi-user.target
