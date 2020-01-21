@@ -10,7 +10,7 @@ class nifi_registry::service (
 ) {
 
   $service_params = {
-    'install_dir' => "${install_root}/nifi_registry-${version}",
+    'install_dir' => "${install_root}/nifi-registry-${version}",
     'user'        => $user,
   }
 
