@@ -1,9 +1,5 @@
 # nifi_registry
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
 #### Table of Contents
 
 1. [Description](#description)
@@ -17,71 +13,70 @@ The README template below provides a starting point with details about what info
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
+Install and configure the [Apache NiFi
+Registry](https://nifi.apache.org/registry.html) which manages shared
+resources for Apache NiFi.
 
 ## Setup
 
-### What nifi_registry affects **OPTIONAL**
+### What nifi_registry affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+This module will download the Apache NiFi Registry tarball to
+`/var/tmp/`.
 
-If there's more that they should know about, though, this is the place to mention:
+The tarball will be unpacked to `/opt/nifi-registry` by default.
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+### Setup Requirements
 
-### Setup Requirements **OPTIONAL**
+NiFi Registry requires Java Runtime Environment. Nifi Registry 0.5.0
+runs on Java 8, newer than 1.8.0_45.
 
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+When installing on local infrastructure, consider download the
+distribution tarballs, validate them with the Apache distribution
+keys, and store it on a local repository. Adjust the configuration
+variables to point to your local repository. The [NiFi Registry
+download page](https://nifi.apache.org/registry.html) also documents
+how to verify the integrity and authenticity of the downloaded files.
 
 ### Beginning with nifi_registry
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+Add dependency modules to your puppet environment:
+
+- puppet/archive
+- puppetlabs/stdlib
+- camptocamp/systemd
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+To download and install NiFi Registry, include the module. This will
+download nifi registry, unpack it under
+`/opt/nifi-registry/nifi-registry-<version>`, and start the service
+with default configuration and storage locations.
 
-## Reference
-
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
+```puppet
+include nifi_registry
 ```
-### `pet::cat`
+To host the file locally, add a nifi_registry::download_url variable for the
+module.
 
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
+```yaml
+nifi_registry::download_url: "http://my-local-repo.example.com/apache/nifi-registry/0.5.0/nifi-registry-0.5.0-bin.tar.gz"
 ```
+
+Please keep `nifi_registry::download_url`,
+`nifi_registry::download_checksum` and `nifi_registry::version` in
+sync. The URL, checksum and version should match. Otherwise, Puppet
+will become confused.
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+This module is under development, and therefore somewhat light on
+functionality.
+
+Configuration is managed yet. This can be managed outside the module
+with `file` resources.
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+In the Development section, tell other users the ground rules for
+contributing to your project and how they should submit their work.
