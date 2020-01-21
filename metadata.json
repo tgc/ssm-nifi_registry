@@ -1,7 +1,7 @@
 {
   "name": "ssm-nifi_registry",
   "version": "0.1.0",
-  "author": "Stig Sandbeck Mathisen",
+  "author": "ssm",
   "summary": "Manage Apache NiFi Registry",
   "license": "Apache-2.0",
   "source": "https://github.com/ssm/ssm-nifi_registry.git",
