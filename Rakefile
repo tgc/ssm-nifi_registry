@@ -84,3 +84,9 @@ EOM
   end
 end
 
+Blacksmith::RakeTask.new do |t|
+  t.tag_pattern = "%s"
+  t.tag_message_pattern = "Release ssm-nifi_registry %s"
+  t.tag_sign = true
+end
+
