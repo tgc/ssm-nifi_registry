@@ -73,7 +73,7 @@ will become confused.
 This module is under development, and therefore somewhat light on
 functionality.
 
-Configuration is managed yet. This can be managed outside the module
+Configuration is not managed yet. This can be managed outside the module
 with `file` resources.
 
 ## Development
