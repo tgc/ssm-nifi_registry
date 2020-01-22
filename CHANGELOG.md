@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.1.0] - 2020-01-21
+
 ### Added
-- Initial release.
-- Download, install and start Apache NiFi Registry.
+
+* Initial release.
+* Download, install and start Apache NiFi Registry.
