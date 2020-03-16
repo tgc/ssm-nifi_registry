@@ -42,9 +42,10 @@ how to verify the integrity and authenticity of the downloaded files.
 
 Add dependency modules to your puppet environment:
 
-- puppet/archive
-- puppetlabs/stdlib
 - camptocamp/systemd
+- puppet/archive
+- puppetlabs/java (optional, you can install java yourself)
+- puppetlabs/stdlib
 
 ## Usage
 

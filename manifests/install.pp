@@ -29,6 +29,11 @@ class nifi_registry::install (
     group         => $group,
   }
 
+  file { "${install_root}/current":
+    ensure => link,
+    target => $software_directory,
+  }
+
   user { $user:
     system => true,
     gid    => $group,
