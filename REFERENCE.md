@@ -51,7 +51,7 @@ The version of Apache Nifi Registry. This must match the version
 in the tarball. This is used for managing files, directories and
 paths in the service.
 
-Default value: '1.10.0'
+Default value: '0.5.0'
 
 ##### `user`
 
@@ -77,7 +77,7 @@ Data type: `String`
 
 Where to download the binary installation tarball from.
 
-Default value: 'http://mirrors.ibiblio.org/apache/nifi-registry/0.5.0/nifi-registry-0.5.0-bin.tar.gz'
+Default value: 'http://mirrors.ibiblio.org/apache/nifi/nifi-registry/nifi-registry-0.5.0/nifi-registry-0.5.0-bin.tar.gz'
 
 ##### `download_checksum`
 
