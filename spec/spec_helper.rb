@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |c|
   c.mock_with :rspec
 end
@@ -39,7 +41,7 @@ RSpec.configure do |c|
   c.before :each do
     # set to strictest setting for testing
     # by default Puppet runs at warning level
-    Puppet.settings[:strict] = :warning
+    Puppet.settings[:strict] = :error
   end
   c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
   c.after(:suite) do
