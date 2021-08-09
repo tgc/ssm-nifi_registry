@@ -1,6 +1,6 @@
 {
   "name": "ssm-nifi_registry",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "author": "ssm",
   "summary": "Manage Apache NiFi Registry",
   "license": "Apache-2.0",
