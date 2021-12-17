@@ -61,7 +61,7 @@ The version of Apache Nifi Registry. This must match the version
 in the tarball. This is used for managing files, directories and
 paths in the service.
 
-Default value: `'1.14.0'`
+Default value: `'1.15.1'`
 
 ##### <a name="user"></a>`user`
 
@@ -87,7 +87,7 @@ Data type: `String`
 
 Where to download the binary installation tarball from.
 
-Default value: `'http://mirrors.ibiblio.org/apache/nifi/1.14.0/nifi-registry-1.14.0-bin.tar.gz'`
+Default value: `'https://dlcdn.apache.org/nifi/1.15.1/nifi-registry-1.15.1-bin.tar.gz'`
 
 ##### <a name="download_checksum"></a>`download_checksum`
 
@@ -96,7 +96,7 @@ Data type: `String`
 The expected checksum of the downloaded tarball. This is used for
 verifying the integrity of the downloaded tarball.
 
-Default value: `'4fac3cab66e0e2eba7d9f7bed27f3783942e01e67c79bba404309bbf9b5262a9'`
+Default value: `'862e6071a39fe94485a90a69637dccf594d319d8f98739a63828bb2d74af840e'`
 
 ##### <a name="download_checksum_type"></a>`download_checksum_type`
 
