@@ -40,9 +40,9 @@
 #   }
 #
 class nifi_registry (
-  String $version = '1.14.0',
-  String $download_url = 'http://mirrors.ibiblio.org/apache/nifi/1.14.0/nifi-registry-1.14.0-bin.tar.gz',
-  String $download_checksum = '4fac3cab66e0e2eba7d9f7bed27f3783942e01e67c79bba404309bbf9b5262a9',
+  String $version = '1.15.1',
+  String $download_url = 'https://dlcdn.apache.org/nifi/1.15.1/nifi-registry-1.15.1-bin.tar.gz',
+  String $download_checksum = '862e6071a39fe94485a90a69637dccf594d319d8f98739a63828bb2d74af840e',
   Stdlib::Absolutepath $download_tmp_dir = '/var/tmp',
   String $user = 'nifiregistry',
   String $group = 'nifiregistry',
