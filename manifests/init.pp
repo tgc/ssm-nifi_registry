@@ -49,7 +49,6 @@ class nifi_registry (
   String $download_checksum_type = 'sha256',
   Stdlib::Absolutepath $install_root = '/opt/nifi-registry',
 ) {
-
   class { 'nifi_registry::install':
     install_root           => $install_root,
     version                => $version,
@@ -63,7 +62,7 @@ class nifi_registry (
 
   include nifi_registry::config
 
-  class {'nifi_registry::service':
+  class { 'nifi_registry::service':
     install_root => $install_root,
     version      => $version,
     user         => $user,

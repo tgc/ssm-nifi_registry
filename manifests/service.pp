@@ -8,7 +8,6 @@ class nifi_registry::service (
   String $version,
   String $user,
 ) {
-
   $service_params = {
     'install_dir' => "${install_root}/nifi-registry-${version}",
     'user'        => $user,

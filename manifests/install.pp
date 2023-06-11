@@ -13,7 +13,6 @@ class nifi_registry::install (
   String $user,
   String $group,
 ) {
-
   $local_tarball = "${download_tmp_dir}/nifi-registry-${version}.tar.gz"
   $software_directory = "${install_root}/nifi-registry-${version}"
 
