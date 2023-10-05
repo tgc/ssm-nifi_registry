@@ -1,9 +1,9 @@
-# @summary Manage Apache Nifi Registry
+# @summary Manage Apache NiFi Registry
 #
-# Install, configure and run Apache Nifi Registry
+# Install, configure and run Apache NiFi Registry
 #
 # @param version
-#   The version of Apache Nifi Registry. This must match the version
+#   The version of Apache NiFi Registry. This must match the version
 #   in the tarball. This is used for managing files, directories and
 #   paths in the service.
 #

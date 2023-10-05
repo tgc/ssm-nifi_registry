@@ -1,6 +1,6 @@
-# @summary Install Apache Nifi Registry
+# @summary Install Apache NiFi Registry
 #
-# Private subclass for installing Apache Nifi Registry.
+# Private subclass for installing Apache NiFi Registry.
 #
 # @api private
 class nifi_registry::install (

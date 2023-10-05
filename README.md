@@ -28,7 +28,7 @@ The tarball will be unpacked to `/opt/nifi-registry` by default.
 
 ### Setup Requirements
 
-NiFi Registry requires Java Runtime Environment. Nifi Registry 0.5.0
+NiFi Registry requires Java Runtime Environment. NiFi Registry 0.5.0
 runs on Java 8, newer than 1.8.0_45.
 
 When installing on local infrastructure, consider download the

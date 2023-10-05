@@ -1,6 +1,6 @@
-# @summary Manage the Apache Nifi Registry service
+# @summary Manage the Apache NiFi Registry service
 #
-# Private subclass for running Apache Nifi Registry as a service
+# Private subclass for running Apache NiFi Registry as a service
 #
 # @api private
 class nifi_registry::service (
