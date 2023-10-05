@@ -34,9 +34,22 @@ include nifi_registry
 
 ```puppet
 class { 'nifi_registry':
-  version                => 'x.y.z',
-  download_url           => 'https://my.local.repo.example.com/apache/nifi-registry/nifi-registry-x.y.z.tar.gz',
-  download_checksum      => 'abcde...',
+  version           => 'x.y.z',
+  download_url      => 'https://my.local.repo.example.com/apache/nifi-registry/nifi-registry-x.y.z.tar.gz',
+  download_checksum => 'abcde...',
+}
+```
+
+##### Configuring NiFi Registry with NiFi cluster node access
+
+```puppet
+class { 'nifi_registry':
+  cluster       => true,
+  cluster_nodes => {
+    'nifi-1.example.com' => { 'id' => 1 },
+    'nifi-2.example.com' => { 'id' => 2 },
+    'nifi-3.example.com' => { 'id' => 3 },
+  }
 }
 ```
 
@@ -48,10 +61,18 @@ The following parameters are available in the `nifi_registry` class:
 * [`user`](#-nifi_registry--user)
 * [`group`](#-nifi_registry--group)
 * [`download_url`](#-nifi_registry--download_url)
+* [`download_archive_type`](#-nifi_registry--download_archive_type)
 * [`download_checksum`](#-nifi_registry--download_checksum)
 * [`download_checksum_type`](#-nifi_registry--download_checksum_type)
-* [`install_root`](#-nifi_registry--install_root)
 * [`download_tmp_dir`](#-nifi_registry--download_tmp_dir)
+* [`install_root`](#-nifi_registry--install_root)
+* [`var_directory`](#-nifi_registry--var_directory)
+* [`log_directory`](#-nifi_registry--log_directory)
+* [`config_directory`](#-nifi_registry--config_directory)
+* [`nifi_registry_properties`](#-nifi_registry--nifi_registry_properties)
+* [`cluster`](#-nifi_registry--cluster)
+* [`cluster_nodes`](#-nifi_registry--cluster_nodes)
+* [`initial_admin_identity`](#-nifi_registry--initial_admin_identity)
 
 ##### <a name="-nifi_registry--version"></a>`version`
 
@@ -61,7 +82,7 @@ The version of Apache NiFi Registry. This must match the version
 in the tarball. This is used for managing files, directories and
 paths in the service.
 
-Default value: `'1.15.1'`
+Default value: `'1.23.2'`
 
 ##### <a name="-nifi_registry--user"></a>`user`
 
@@ -87,7 +108,15 @@ Data type: `String`
 
 Where to download the binary installation tarball from.
 
-Default value: `'https://dlcdn.apache.org/nifi/1.15.1/nifi-registry-1.15.1-bin.tar.gz'`
+Default value: `"https://dlcdn.apache.org/nifi/${version}/nifi-registry-${version}-bin.${download_archive_type}"`
+
+##### <a name="-nifi_registry--download_archive_type"></a>`download_archive_type`
+
+Data type: `Enum['zip', 'tar.gz']`
+
+The archive type of the downloaded tarball.
+
+Default value: `'zip'`
 
 ##### <a name="-nifi_registry--download_checksum"></a>`download_checksum`
 
@@ -96,7 +125,7 @@ Data type: `String`
 The expected checksum of the downloaded tarball. This is used for
 verifying the integrity of the downloaded tarball.
 
-Default value: `'862e6071a39fe94485a90a69637dccf594d319d8f98739a63828bb2d74af840e'`
+Default value: `'b6609c1e06e270b54c58b1a5cfabe1b9239db1a12142c27949f37c96f9f7880e'`
 
 ##### <a name="-nifi_registry--download_checksum_type"></a>`download_checksum_type`
 
@@ -107,6 +136,14 @@ verifying the integrity of the downloaded tarball.
 
 Default value: `'sha256'`
 
+##### <a name="-nifi_registry--download_tmp_dir"></a>`download_tmp_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Temporary directory for downloading the tarball.
+
+Default value: `'/var/tmp'`
+
 ##### <a name="-nifi_registry--install_root"></a>`install_root`
 
 Data type: `Stdlib::Absolutepath`
@@ -115,11 +152,82 @@ The root directory of the nifi registry installation.
 
 Default value: `'/opt/nifi-registry'`
 
-##### <a name="-nifi_registry--download_tmp_dir"></a>`download_tmp_dir`
+##### <a name="-nifi_registry--var_directory"></a>`var_directory`
 
 Data type: `Stdlib::Absolutepath`
 
+The root of the writable paths used by NiFi Registry. NiFi Registry will
+create directories beneath this path.  This will implicitly add
+nifi registry properties for working directories and repositories.
 
+Default value: `'/var/opt/nifi-registry'`
 
-Default value: `'/var/tmp'`
+##### <a name="-nifi_registry--log_directory"></a>`log_directory`
+
+Data type: `Stdlib::Absolutepath`
+
+The directory where NiFi stores its user, app and bootstrap logs. Nifi will
+create log files beneath this path and take care of log rotation and
+deletion.
+
+Default value: `'/var/log/nifi-registry'`
+
+##### <a name="-nifi_registry--config_directory"></a>`config_directory`
+
+Data type: `Stdlib::Absolutepath`
+
+Directory for NiFi Registry version independent configuration files to be
+kept across NiFi Registry version upgrades. NiFi Registry will also write
+generated configuration files to this directory. This is used in addition
+to the "./conf" directory within each NiFi Registry installation.
+
+Default value: `'/opt/nifi-registry/config'`
+
+##### <a name="-nifi_registry--nifi_registry_properties"></a>`nifi_registry_properties`
+
+Data type: `Hash[String,Nifi::Property]`
+
+Hash of parameter key/values to be added to conf/nifi-registry.properties.
+
+Default value: `{}`
+
+##### <a name="-nifi_registry--cluster"></a>`cluster`
+
+Data type: `Boolean`
+
+If true, the cluster_nodes parameter is used to configure authorization for
+the nodes.
+
+Default value: `false`
+
+##### <a name="-nifi_registry--cluster_nodes"></a>`cluster_nodes`
+
+Data type:
+
+```puppet
+Hash[
+    Stdlib::Fqdn, Struct[{ id => Integer[1,255] }]
+  ]
+```
+
+A hash of NiFi Registry cluster nodes and their ID. The ID must be an
+integer between 1 and 255, unique in the cluster, and must not be
+changed once set.
+
+The hash must be structured like { 'fqdn.example.com' => { 'id' => 1 },... }
+
+The identity of the NiFi nodes that will have access to this NiFi Registry
+and will be able to act as a proxy on behalf of a NiFi Registry end user.
+
+Default value: `{}`
+
+##### <a name="-nifi_registry--initial_admin_identity"></a>`initial_admin_identity`
+
+Data type: `Optional[String]`
+
+The initial admin identity used in the authorizers.xml file by NiFi Registry
+This is useful when connecting NiFi Registry to an external authentication
+source.
+
+Default value: `undef`
 

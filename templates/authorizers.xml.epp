@@ -1,0 +1,44 @@
+<%- | Optional[String] $initial_admin_identity = undef,
+      Boolean $cluster,
+      Hash[Stdlib::Fqdn, Struct[{id => Integer[1]}]] $cluster_nodes,
+      Stdlib::Absolutepath $config_directory,
+    | -%>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+    This file is managed by puppet.
+
+-->
+<authorizers>
+    <userGroupProvider>
+        <identifier>file-user-group-provider</identifier>
+        <class>org.apache.nifi.registry.security.authorization.file.FileUserGroupProvider</class>
+        <property name="Users File"><%= $config_directory %>/users.xml</property>
+        <%- if $initial_admin_identity { -%>
+        <property name="Initial User Identity 1"><%= $initial_admin_identity %></property>
+        <%- } -%>
+    </userGroupProvider>
+    <accessPolicyProvider>
+        <identifier>file-access-policy-provider</identifier>
+        <class>org.apache.nifi.registry.security.authorization.file.FileAccessPolicyProvider</class>
+        <property name="User Group Provider">file-user-group-provider</property>
+        <property name="Authorizations File"><%= $config_directory %>/authorizations.xml</property>
+        <%- if $initial_admin_identity { -%>
+        <property name="Initial Admin Identity"><%= $admin_identity %></property>
+        <%- } -%>
+        <%- if $cluster { -%>
+        <%-   $cluster_nodes.each | $cluster_node, $params | {
+              $node_dn = "CN=${cluster_node}"
+              $node_id = "Node Identity ${params['id']}"
+        -%>
+        <property name="NiFi Identity <%= $node_id %>"><%= $node_dn %></property>
+        <%-   } -%>
+        <%- } -%>
+        <property name="NiFi Group Name"></property>
+    </accessPolicyProvider>
+    <authorizer>
+        <identifier>managed-authorizer</identifier>
+        <class>org.apache.nifi.registry.security.authorization.StandardManagedAuthorizer</class>
+        <property name="Access Policy Provider">file-access-policy-provider</property>
+    </authorizer>
+</authorizers>

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased] - xxxx-xx-xx
+
+## Changed
+
+- Install NiFi registry version `1.23.2` by default
+- This module now downloads NiFi Registry as a "zip" archive instead of
+  "tar.gz", and requires the "unzip" package to be present.
+- Declare support for Red Hat Enterprise Linux 9
+- Update README.md
+- Update REFERENCE.md
+
+## Added
+
+- Configuration management support following the same pattern as [ssm-nifi](https://github.com/ssm/ssm-nifi/)
+
 ## [0.4.0] - 2021-12-20
 ### Changed
 - Install NiFi registry version `1.15.1` by default
@@ -50,7 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Initial release.
 * Download, install and start Apache NiFi Registry.
 
-[unreleased]: https://github.com/ssm/ssm-nifi_registry/compare/0.3.0...main
+[unreleased]: https://github.com/ssm/ssm-nifi_registry/compare/0.4.0...main
+[0.4.0]: https://github.com/ssm/ssm-nifi_registry/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/ssm/ssm-nifi_registry/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/ssm/ssm-nifi_registry/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/ssm/ssm-nifi_registry/compare/0.2.0...0.2.1

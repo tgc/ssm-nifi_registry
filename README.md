@@ -26,10 +26,25 @@ This module will download the Apache NiFi Registry tarball to
 
 The tarball will be unpacked to `/opt/nifi-registry` by default.
 
+NiFi Registry defaults to store logs and state and configuration within the
+installation directory. This module changes this behaviour.
+
+The module will create `/var/opt/nifi-registry`, for persistent storage outside
+the software install root. This will also configure the following nifi registry
+properties to create directories under this path.
+
+- nifi.registry.extensions.working.directory
+- nifi.registry.web.jetty.working.directory
+- nifi.registry.db.url
+
+The module will create `/var/log/nifi-registry`, and configures NiFi Registry
+to write log files to this directory. NiFi Registry handles log rotation by
+itself.
+
 ### Setup Requirements
 
-NiFi Registry requires Java Runtime Environment. NiFi Registry 0.5.0
-runs on Java 8, newer than 1.8.0_45.
+NiFi Registry requires Java Runtime Environment. NiFi Registry 1.23.2 runs on
+Java 8 or Java 11.
 
 When installing on local infrastructure, consider download the
 distribution tarballs, validate them with the Apache distribution
@@ -42,8 +57,10 @@ how to verify the integrity and authenticity of the downloaded files.
 
 Add dependency modules to your puppet environment:
 
-- camptocamp/systemd
 - puppet/archive
+- puppet/augeasproviders_shellvar
+- puppet/systemd
+- puppetlabs/inifile
 - puppetlabs/java (optional, you can install java yourself)
 - puppetlabs/stdlib
 
@@ -73,9 +90,6 @@ will become confused.
 
 This module is under development, and therefore somewhat light on
 functionality.
-
-Configuration is not managed yet. This can be managed outside the module
-with `file` resources.
 
 ## Development
 
