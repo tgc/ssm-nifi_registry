@@ -24,7 +24,7 @@
         <property name="User Group Provider">file-user-group-provider</property>
         <property name="Authorizations File"><%= $config_directory %>/authorizations.xml</property>
         <%- if $initial_admin_identity { -%>
-        <property name="Initial Admin Identity"><%= $admin_identity %></property>
+        <property name="Initial Admin Identity"><%= $initial_admin_identity %></property>
         <%- } -%>
         <%- if $cluster { -%>
         <%-   $cluster_nodes.each | $cluster_node, $params | {
